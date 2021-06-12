@@ -45,3 +45,4 @@ def solution(A):
 print(solution([55, 90, 11, 33333, 4405, 702650, 13, 7, 2, 8, 3]))
 print(solution([16, 16]))
 print(solution([1, 2, 4, 8]))
+
