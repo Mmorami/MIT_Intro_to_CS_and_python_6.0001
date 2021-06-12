@@ -23,6 +23,7 @@ def check_count_for_specific_bit(A_bin, A_bin_copy, bit_pos, max_count):
     A_bin = A_bin_copy.copy()
     return A_bin, max_count
 
+
 def solution(A):
     # sorting the list in des order
     A.sort(reverse=True)
