@@ -1,10 +1,5 @@
-# Problem Set 4A
-# Name: <your name here>
-# Collaborators:
-# Time Spent: x:xx
-
 def get_permutations(sequence):
-    '''
+    """
     Enumerate all permutations of a given string
 
     sequence (string): an arbitrary string to permute. Assume that it is a
@@ -21,9 +16,19 @@ def get_permutations(sequence):
 
     Note: depending on your implementation, you may return the permutations in
     a different order than what is listed here.
-    '''
+    """
+    seq = sequence
+    for index, letter in enumerate(sequence):
+        if len(seq) == 1:
+            return seq
+        l_perm_red = get_permutations(seq[:index]+seq[index+1:])
+        l_perm_final = []
+        for perm in l_perm_red:
+            for char in perm:
+                l_perm_final.append(perm.replace(char, letter+char))
+            l_perm_final.append(perm+letter)
+        return l_perm_final
 
-    pass #delete this line and replace with your code here
 
 if __name__ == '__main__':
 #    #EXAMPLE
@@ -36,5 +41,24 @@ if __name__ == '__main__':
 #    to be three characters or fewer as you will have n! permutations for a 
 #    sequence of length n)
 
-    pass #delete this line and replace with your code here
+    seq = "abc"
+    exp = ['abc', 'acb', 'bac', 'bca', 'cab', 'cba']
+    print('Input:', seq)
+    print('Expected Output:', exp)
+    print('Actual Output:', get_permutations(seq))
+
+    seq = "dodd"
+    exp = ['dod', 'ddo', 'odd', 'odd', 'dod', 'ddo']
+    print('Input:', seq)
+    print('Expected Output:', exp)
+    print('Actual Output:', get_permutations(seq))
+
+    seq = "bust"
+    exp = ['bust', 'buts', 'bsut', 'bstu', 'btus', 'btsu',
+           'ubst', 'ubts', 'utbs', 'utsb', 'utbs', 'utsb',
+           'tbus', 'tbsu', 'tusb', 'tubs', 'tsub', 'tsbu',
+           'sbut', 'sbtu', 'subt', 'sutb', 'stbu', 'stub']
+    print('Input:', seq)
+    print('Expected Output:', exp)
+    print('Actual Output:', get_permutations(seq))
 
