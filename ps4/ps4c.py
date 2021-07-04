@@ -176,7 +176,7 @@ class EncryptedSubMessage(SubMessage):
             if dec_words > best_dec:
                 best_dec = dec_words
                 best_dec_msg = dec_msg
-        return  best_dec_msg
+        return best_dec_msg
 
 
 if __name__ == '__main__':
@@ -190,4 +190,11 @@ if __name__ == '__main__':
     enc_message = EncryptedSubMessage(message.apply_transpose(enc_dict))
     print("Decrypted message:", enc_message.decrypt_message())
 
-    # TODO: WRITE YOUR TEST CASES HERE
+    message = SubMessage("I shall have tea and biscuits now!")
+    permutation = "iouae"
+    enc_dict = message.build_transpose_dict(permutation)
+    print("Original message:", message.get_message_text(), "Permutation:", permutation)
+    print("Expected encryption:", "U shill hivo toi ind busceuts naw!")
+    print("Actual encryption:", message.apply_transpose(enc_dict))
+    enc_message = EncryptedSubMessage(message.apply_transpose(enc_dict))
+    print("Decrypted message:", enc_message.decrypt_message())
