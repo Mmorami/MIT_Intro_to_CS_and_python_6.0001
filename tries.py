@@ -72,3 +72,8 @@ print(bool(l4))
 s = "03 Oct 2016 17:00:10"
 dt = datetime.strptime(s, "%d %b %Y %H:%M:%S")
 print(dt)
+
+ll = [0,2,5,789,9]
+print(ll.pop(1))
+dic = {'a': (25, 'A'), 'y': ('ff', '@$')}
+print(dic)
