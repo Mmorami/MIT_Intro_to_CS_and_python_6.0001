@@ -6,10 +6,10 @@
 t1,TITLE,בנט
 
 // description trigger named t2
-t2,DESCRIPTION,איראן
+t2,TITLE,מפגינים
 
 // description trigger named t3
-t3,DESCRIPTION,חשמל
+t3,TITLE,איראן
 
 // after trigger named t4
 t4,AFTER,3 Oct 2016 17:00:10

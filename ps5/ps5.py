@@ -116,6 +116,9 @@ class TitleTrigger(PhraseTrigger):
     def evaluate(self, story):
         return self.is_phrase_in_title(story)
 
+    def __str__(self):
+        return "Title contains " + self.phrase
+
 
 # Problem 4
 class DescriptionTrigger(PhraseTrigger):
@@ -128,6 +131,8 @@ class DescriptionTrigger(PhraseTrigger):
     def evaluate(self, story):
         return self.is_phrase_in_description(story)
 
+    def __str__(self):
+        return "Description contains " + self.phrase
 
 # TIME TRIGGERS
 
@@ -150,6 +155,9 @@ class BeforeTrigger(TimeTrigger):
     def evaluate(self, story):
         return story.get_pubdate().replace(tzinfo=pytz.timezone("EST")) < self.dateTime
 
+    def __str__(self):
+        return "News before " + self.dateTime
+
 
 class AfterTrigger(TimeTrigger):
     def __init__(self, est_time_str):
@@ -157,6 +165,9 @@ class AfterTrigger(TimeTrigger):
 
     def evaluate(self, story):
         return story.get_pubdate().replace(tzinfo=pytz.timezone("EST")) > self.dateTime
+
+    def __str__(self):
+        return "News after " + self.dateTime
 
 
 # COMPOSITE TRIGGERS
@@ -169,6 +180,9 @@ class NotTrigger(Trigger):
     def evaluate(self, story):
         return not self.trigger.evaluate(story)
 
+    def __str__(self):
+        return "Does not contain " + str(self.trigger)
+
 
 # Problem 8
 class AndTrigger(Trigger):
@@ -178,6 +192,9 @@ class AndTrigger(Trigger):
 
     def evaluate(self, story):
         return self.trig1.evaluate(story) and self.trig2.evaluate(story)
+
+    def __str__(self):
+        return "Contain " + str(self.trig1) + " and " + str(self.trig2)
 
 
 # Problem 9
@@ -189,6 +206,8 @@ class OrTrigger(Trigger):
     def evaluate(self, story):
         return self.trig1.evaluate(story) or self.trig2.evaluate(story)
 
+    def __str__(self):
+        return "Contain " + str(self.trig1) + " or " + str(self.trig2)
 
 # ======================
 # Filtering
@@ -256,10 +275,10 @@ def read_trigger_config(filename):
     trigger_list = []
     for line in lines:
         list_of_line = line.split(',')
-        if line.startswith("ADD"):
+        if not line.startswith("ADD"):
             temp_dict = create_appropriate_trigger(list_of_line, temp_dict)
         else:
-            for i in range(1, len(line)):
+            for i in range(1, len(list_of_line)):
                 trigger_list.append(temp_dict[list_of_line[i]])
     print(temp_dict)
     print(trigger_list)
