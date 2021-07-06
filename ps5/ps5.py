@@ -6,6 +6,7 @@ from project_util import translate_html
 from mtTkinter import *
 from datetime import datetime
 import pytz
+import re
 
 
 # -----------------------------------------------------------------------
@@ -73,6 +74,7 @@ class NewsStory(object):
     def get_pubdate(self):
         return self.pubdate
 
+
 # ======================
 # Triggers
 # ======================
@@ -90,30 +92,82 @@ class Trigger(object):
 # PHRASE TRIGGERS
 
 # Problem 2
-# TODO: PhraseTrigger
+class PhraseTrigger(Trigger):
+    def __init__(self, phrase):
+        self.phrase = phrase.lower()
+
+    def is_phrase_in(self, text):
+        text = text.lower()
+        for punctuation in string.punctuation:
+            text = text.replace(punctuation, ' ')
+        text = text.split()
+        text = ' '.join(text)
+        return bool(len(re.findall('\\b'+self.phrase+'\\b', text)))
+
 
 # Problem 3
-# TODO: TitleTrigger
+class TitleTrigger(PhraseTrigger):
+    def __init__(self, phrase):
+        PhraseTrigger.__init__(self, phrase)
+
+    def is_phrase_in_title(self, ns):
+        return self.is_phrase_in(ns.get_title())
+
+    def evaluate(self, story):
+        return self.is_phrase_in_title(story)
+
 
 # Problem 4
-# TODO: DescriptionTrigger
+class DescriptionTrigger(PhraseTrigger):
+    def __init__(self, phrase):
+        PhraseTrigger.__init__(self, phrase)
+
+    def is_phrase_in_description(self, ns):
+        return self.is_phrase_in(ns.get_description())
+
+    def evaluate(self, story):
+        return self.is_phrase_in_description(story)
+
 
 # TIME TRIGGERS
 
 # Problem 5
-# TODO: TimeTrigger
+class TimeTrigger(Trigger):
+    def __init__(self, est_time_str):
+        dt = datetime.strptime(est_time_str, "%d %b %Y %H:%M:%S")
+        self.dateTime = dt.replace(tzinfo=pytz.timezone("EST"))
+
+
 # Constructor:
 #        Input: Time has to be in EST and in the format of "%d %b %Y %H:%M:%S".
 #        Convert time from string to a datetime before saving it as an attribute.
 
 # Problem 6
-# TODO: BeforeTrigger and AfterTrigger
+class BeforeTrigger(TimeTrigger):
+    def __init__(self, est_time_str):
+        TimeTrigger.__init__(self, est_time_str)
+
+    def evaluate(self, story):
+        return story.get_pubdate().replace(tzinfo=pytz.timezone("EST")) < self.dateTime
+
+
+class AfterTrigger(TimeTrigger):
+    def __init__(self, est_time_str):
+        TimeTrigger.__init__(self, est_time_str)
+
+    def evaluate(self, story):
+        return story.get_pubdate().replace(tzinfo=pytz.timezone("EST")) > self.dateTime
 
 
 # COMPOSITE TRIGGERS
 
 # Problem 7
-# TODO: NotTrigger
+class NotTrigger(Trigger):
+    def __init__(self, trigger):
+        self.trigger = trigger
+
+    def evaluate(self, story):
+        return not self.trigger.evaluate(story)
 
 # Problem 8
 # TODO: AndTrigger
@@ -237,3 +291,4 @@ if __name__ == '__main__':
     t = threading.Thread(target=main_thread, args=(root,))
     t.start()
     root.mainloop()
+
