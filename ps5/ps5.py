@@ -169,11 +169,25 @@ class NotTrigger(Trigger):
     def evaluate(self, story):
         return not self.trigger.evaluate(story)
 
+
 # Problem 8
-# TODO: AndTrigger
+class AndTrigger(Trigger):
+    def __init__(self, trig1, trig2):
+        self.trig1 = trig1
+        self.trig2 = trig2
+
+    def evaluate(self, story):
+        return self.trig1.evaluate(story) and self.trig2.evaluate(story)
+
 
 # Problem 9
-# TODO: OrTrigger
+class OrTrigger(Trigger):
+    def __init__(self, trig1, trig2):
+        self.trig1 = trig1
+        self.trig2 = trig2
+
+    def evaluate(self, story):
+        return self.trig1.evaluate(story) or self.trig2.evaluate(story)
 
 
 # ======================
@@ -187,10 +201,13 @@ def filter_stories(stories, triggerlist):
 
     Returns: a list of only the stories for which a trigger in triggerlist fires.
     """
-    # TODO: Problem 10
-    # This is a placeholder
-    # (we're just returning all the stories, with no filtering)
-    return stories
+    filtered_stories = []
+    for story in stories:
+        for trigger in triggerlist:
+            if trigger.evaluate(story):
+                filtered_stories.append(story)
+                break
+    return filtered_stories
 
 
 # ======================
