@@ -41,6 +41,7 @@ def is_triangular(k):
 
     # a more efficient method
     n = (-1 + (1 + 8*k)**0.5)/2
+    # note that I chose only the + branch in the quadratic equation as n should be positive
     if n.is_integer():
         return True
     return False
