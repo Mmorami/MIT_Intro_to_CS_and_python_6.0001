@@ -156,7 +156,7 @@ class BeforeTrigger(TimeTrigger):
         return story.get_pubdate().replace(tzinfo=pytz.timezone("EST")) < self.dateTime
 
     def __str__(self):
-        return "News before " + self.dateTime
+        return "News before " + self.dateTime.strftime("%d %b %Y %H:%M:%S")
 
 
 class AfterTrigger(TimeTrigger):
@@ -167,7 +167,7 @@ class AfterTrigger(TimeTrigger):
         return story.get_pubdate().replace(tzinfo=pytz.timezone("EST")) > self.dateTime
 
     def __str__(self):
-        return "News after " + self.dateTime
+        return "News after " + self.dateTime.strftime("%d %b %Y %H:%M:%S")
 
 
 # COMPOSITE TRIGGERS
@@ -208,6 +208,7 @@ class OrTrigger(Trigger):
 
     def __str__(self):
         return "Contain " + str(self.trig1) + " or " + str(self.trig2)
+
 
 # ======================
 # Filtering
@@ -280,7 +281,6 @@ def read_trigger_config(filename):
         else:
             for i in range(1, len(list_of_line)):
                 trigger_list.append(temp_dict[list_of_line[i]])
-    print(temp_dict)
     print(trigger_list)
     return trigger_list
 
@@ -292,11 +292,11 @@ def main_thread(master):
     # A sample trigger list - you might need to change the phrases to correspond
     # to what is currently in the news
     try:
-        t1 = TitleTrigger("election")
-        t2 = DescriptionTrigger("Trump")
-        t3 = DescriptionTrigger("Clinton")
-        t4 = AndTrigger(t2, t3)
-        triggerlist = [t1, t4]
+        # t1 = TitleTrigger("election")
+        # t2 = DescriptionTrigger("Trump")
+        # t3 = DescriptionTrigger("Clinton")
+        # t4 = AndTrigger(t2, t3)
+        # triggerlist = [t1, t4]
 
         # After implementing read_trigger_config, uncomment this line
         triggerlist = read_trigger_config('triggers.txt')
