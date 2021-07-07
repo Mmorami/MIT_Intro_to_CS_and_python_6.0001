@@ -176,7 +176,10 @@ class EncryptedSubMessage(SubMessage):
             if dec_words > best_dec:
                 best_dec = dec_words
                 best_dec_msg = dec_msg
-        return best_dec_msg
+        if best_dec > 0:
+            return best_dec_msg
+        else:
+            return self.message_text
 
 
 if __name__ == '__main__':

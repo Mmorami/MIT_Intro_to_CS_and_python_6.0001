@@ -1,3 +1,6 @@
+import string
+from datetime import datetime
+
 def decimal_to_binary(A):
     # creating an empty list for the binary values of the numbers
     A_bin = []
@@ -50,3 +53,27 @@ print(solution([1, 2, 4, 8]))
 # print("a = ", a)
 # a = (3, 6)
 # print("a = ", a)
+
+strin = string.punctuation
+print(strin)
+b = "fodo    kspss"
+
+
+l1 = ['purple', 'cow']
+l2 = ['purple', 'cow', 'are', 'cool']
+l3 = ['']
+l4 = []
+
+print(bool(l1))
+print(bool(l2))
+print(bool(l3))
+print(bool(l4))
+
+s = "03 Oct 2016 17:00:10"
+dt = datetime.strptime(s, "%d %b %Y %H:%M:%S")
+print(dt)
+
+ll = [0,2,5,789,9]
+print(ll.pop(1))
+dic = {'a': (25, 'A'), 'y': ('ff', '@$')}
+print(dic)
