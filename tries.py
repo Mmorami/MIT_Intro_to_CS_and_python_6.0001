@@ -77,3 +77,6 @@ ll = [0,2,5,789,9]
 print(ll.pop(1))
 dic = {'a': (25, 'A'), 'y': ('ff', '@$')}
 print(dic)
+
+tup = ([1,2,4], ['a','b','d'])
+print(tup)
